@@ -26,20 +26,22 @@ export default {
 </style> -->
 <template>
   <div class="app">
-    <form>
-      <h1> Create </h1> <br/>
-      <input type="text" class="input" placeholder="title"/> <br/> <br/>
-      <input type="text" class="input" placeholder="description"/> <br/> <br/>
-      <button class="btn" @click="createPost">Add</button>
-    </form>
-    <div class="post" v-for="post in posts" v-bind:key="post">
-      <div><strong>Title: </strong> {{ post.title }}</div>
-      <div><strong>Content: </strong> {{ post.body }}</div>
-    </div>
+      <post-form
+        @create="createPost"
+      />
+      <post-list 
+       :posts="posts"
+      />
+
   </div>
 </template>
 <script>
+import PostForm from "./components/PostForm.vue";
+import PostList from "./components/PostList.vue";
 export default {
+  components: {
+    PostList, PostForm
+  },
   data() {
     return {
       posts: [
@@ -47,51 +49,30 @@ export default {
         {id: 2, title: 'python', body: 'Описание поста PY'},
         {id: 3, title: 'php', body: 'Описание поста PHP'},
         {id: 4, title: 'node', body: 'Описание поста Node'},
-      ]
+      ],
     }
   },
   methods: {
-    createPost
+    createPost(post){
+      this.posts.push(post);
+    },
   }
 }
 </script>
 <style>
 * {
+font-family: sans-serif;
  margin: 0;
  padding: 0;
   box-sizing: border-box;
 }
 
+h1{
+  padding:20px;
+}
+
 .app{
   padding: 20px;
-}
-
-.post {
-  margin: 20px;
-  padding: 15px;
-  border: 2px solid #eeeeee;
-}
-
-.input {
-  width: 600px;
-  border: 2px solid #eeeeee;
-  padding: 15px;
-  margin-left: 20px;
-  margin-top: 10px;
-}
-
-.btn {
-  background-color: #eeeeee;
-  border: 0px;
-  padding: 15px;
-  margin-left: 20px;
-  width: 600px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-
 }
 </style>
 
